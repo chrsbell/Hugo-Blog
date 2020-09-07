@@ -4,7 +4,7 @@ subtitle: "How I wrote a simple emulator"
 author: "Chris"
 description: ""
 date: 2020-08-30T21:52:13-07:00
-draft: true
+draft: false
 tags: ['python', 'emulator', 'chip-8']
 categories: ["Chip-8"]
 DisableComments: false

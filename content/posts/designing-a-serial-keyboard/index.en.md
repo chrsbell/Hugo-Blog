@@ -7,7 +7,6 @@ date: 2020-08-23T20:02:36-07:00
 draft: true
 tags: ['serial', 'keyboard', 'low-latency', 'pcb', 'design']
 categories: ["Serial Keyboard"]
-DisableComments: false
 featuredImage: "featured-image.jpeg"
 math:
   enable: true
