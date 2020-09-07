@@ -1,10 +1,10 @@
 ---
-title: "Designing a Serial Keyboard PCB"
-subtitle: "How I designed an original printed circuit board"
+title: "Designing a Serial Keyboard Circuit"
+subtitle: "How I designed the circuit for a mini keyboard"
 author: "Chris"
 description: ""
 date: 2020-08-23T20:02:36-07:00
-draft: true
+draft: false
 tags: ['serial', 'keyboard', 'low-latency', 'pcb', 'design']
 categories: ["Serial Keyboard"]
 featuredImage: "featured-image.jpeg"
@@ -18,8 +18,6 @@ Excited to try and get back into blogging!
 
 This will be the first post in a *hopefully* not super long series documenting my progress in building a very special mini keyboard.
 <!--more-->
-</br>
-</br>
 
 ***
 
@@ -43,7 +41,7 @@ This serial keyboard project was based off of work I did last year on a [very si
 
 ## Circuitry
 
-My first step in designing the PCB for my keyboard was to pick a CAD program. There are many free and commercial programs available for this purpose, but the ones I'm most familiar with are KiCAD and EAGLE. KiCAD has great support for hierarchical sheets and it's free so I went with that. At first, I designed the circuit without using hierarchioal sheets but later added them since I had extra time. Here are some before and after pics of the full circuit!</br></br>
+My first step in designing the circuit for my keyboard was to pick a CAD program. There are many free and commercial programs available for this purpose, but the ones I'm most familiar with are KiCAD and EAGLE. KiCAD has great support for hierarchical sheets and it's free so I went with that. At first, I designed the circuit without using hierarchical sheets but later added them since I had extra time. Here are some before and after pics of the full circuit!</br></br>
 
 {{< gallery hover-effect="grow" caption-effect="fade">}}
   {{< figure src="/images/blog/8-20/sch-before.jpg" caption="Designing the circuit without hierarchical sheets " >}}
@@ -68,17 +66,57 @@ To receive and send USB data for keyboard firmware updates, I used the [FT230XQ]
 
 {{< figure src="/images/blog/8-20/usb-uart.jpg" caption="The completed USB-UART circuit" >}}
 
+***
+
 ### RGB Backlighting
 
 The next new feature I attempted to implement was adjustable RGB backlighting. The first step in designing this circuit was to refresh my understanding of transistors. It took a bit of time, but I ended up using [IRLML2060](https://www.infineon.com/dgdl/irlml2060pbf.pdf?fileId=5546d462533600a401535664b7fb25ee) N-MOSFETs for each color. This transistor is operable with TTL logic levels and has a short enough time delay to drive the LEDs with PWM. I added [two potentiometers](https://www.mouser.com/datasheet/2/54/3352-776447.pdf) as well; one to control the hue of the LEDs, and one to control the brightness. I had a tough time deciding on LEDs but ended up using [these fairly bright ones](https://www.cree.com/led-components/media/documents/ds-CLVBA-FKA.pdf).
 
 {{< figure src="/images/blog/8-20/backlight.jpg" caption="The completed backlighting circuit" >}}
 
+***
+
 ### RS232 Converter
 
-While the on-chip UART devices allow for easy serial communication between TTL logic levels (typically around 3.3V), serial communication with a PC's serial port requires voltage levels which swing from ~$\pm$12V. The famous [MAX232 IC](http://www.ti.com/lit/ds/symlink/max232.pdf) takes care of this conversion, and I once again just used the example circuit with no modifications needed.
+While the on-chip UART devices allow for easy serial communication between TTL logic levels (typically around 3.3V), serial communication with a PC's serial port requires voltage levels which swing from ~$\pm$12V. The famous [MAX232 IC](http://www.ti.com/lit/ds/symlink/max232.pdf) takes care of this conversion, and I once again used the preexisting example circuit with no modifications needed.
+
+{{< figure src="/images/blog/8-20/rs232-converter.jpg" caption="The RS232 conversion circuit">}}
+
+***
+
+### Debouncing
+
+This circuit is responsible for *attempting* to reduce the largest source of keyboard latency for Cherry MX switches, switch bouncing.
+On debouncing:
+> "When the contacts of any mechanical switch bang together they rebound a bit before
+settling, causing bounce. **Debouncing**, of course, is the process of removing the bounces,
+of converting the brutish realities of the analog world into pristine ones and zeros. Both
+hardware and software solutions exist, though by far the most common are those done in
+a snippet of code."
+> > [Jack Ganssle](https://my.eng.utah.edu/~cs5780/debouncing.pdf)
+
+My goal with this circuit was to use hysteresis to reduce/eliminate logic changes due to switch bouncing. My previous project attempted to use hysteresis, but was flawed because of incorrect RC values and an incorrect hysteresis circuit. The updated circuit should behave as expected although I have yet to test it, and it was mostly taken from [this simple hysteresis circuit](https://hackaday.com/2015/12/09/embed-with-elliot-debounce-your-noisy-buttons-part-i/). I adjusted the debounce time here to 0.1 ms versus the recommended 5 ms time for Cherry switches...we'll see how that goes.
+
+{{< figure src="/images/blog/8-20/debounce.jpg" caption="The circuit responsible for the bulk of debouncing">}}
+
+***
+
+### Power and Oscillator
+
+These circuits are pretty unexciting and take care of the basics of providing 3.3V to the ICs and 100MHz to the microcontroller. After playing around with MPLAB Code Configurator, however, I think I might have misinterpreted how the microcontroller should be run at 100MHz. My initial assumption was that the microcontroller would play fine with a 100MHz external clock, but as shown in the below picture the max frequency for an external clock is 64MHz. The apparent solution to this would be to use a clock source with a PLL; an example is show in the second figure using the internal FRC clock. So I will probably need to use the internal FRC clock for this one.
 
 {{< gallery hover-effect="grow" caption-effect="fade">}}
-  {{< figure src="/images/blog/8-20/gallery-1/pcb-3d-top.jpeg" caption="Top of PCB" >}}
-  {{< figure src="/images/blog/8-20/gallery-1/pcb-3d-bottom.jpeg"caption="Bottom of PCB" >}}
+  {{< figure src="/images/blog/8-20/clock/external-clock.png" caption="The maximum external clock frequency..." >}}
+  {{< figure src="/images/blog/8-20/clock/pll.png"caption="FRC with PLL can provide the expected 100MHz" >}}
+{{< /gallery >}}
+
+***
+
+### Complete PCB
+
+So here is the completed PCB! I skipped a few steps to get to this point, but hopefully in another post I can talk about the obstacles and decisions I made while designing the PCB.
+
+{{< gallery hover-effect="grow" caption-effect="fade">}}
+  {{< figure src="/images/blog/8-20/pcb-3d/pcb-3d-top.jpeg" caption="Top of PCB" >}}
+  {{< figure src="/images/blog/8-20/pcb-3d/pcb-3d-bottom.jpeg"caption="Bottom of PCB" >}}
 {{< /gallery >}}
