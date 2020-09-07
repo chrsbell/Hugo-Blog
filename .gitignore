@@ -1,2 +1,4 @@
 /public/
 config.toml
+node_modules
+.env

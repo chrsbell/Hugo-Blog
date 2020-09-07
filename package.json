@@ -1,0 +1,25 @@
+{
+  "name": "chrsbell.github.io",
+  "version": "1.0.0",
+  "description": "",
+  "dependencies": {
+    "atomic-algolia": "^0.3.19"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "build-test": "hugo -e production",
+    "build-production": "hugo -D -e production && echo \"\nDon't forget to index the generated files with 'npm run index'!\"",
+    "test": "hugo server -D -e production",
+    "index": "atomic-algolia"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chrsbell/Hugo-Blog.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/chrsbell/Hugo-Blog/issues"
+  },
+  "homepage": "https://github.com/chrsbell/Hugo-Blog#readme"
+}
