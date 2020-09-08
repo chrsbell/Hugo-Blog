@@ -7,9 +7,9 @@
   },
   "devDependencies": {},
   "scripts": {
-    "build-test": "hugo -e production",
-    "build-production": "hugo -D -e production && echo \"\nDon't forget to index the generated files with 'npm run index'!\"",
-    "test": "hugo server -D -e production",
+    "build-nodraft": "hugo -e production",
+    "build-all": "hugo -D -e production && echo \"\nDon't forget to index the generated files with 'npm run index'!\"",
+    "server": "hugo server -D -e production",
     "index": "atomic-algolia"
   },
   "repository": {
