@@ -13,4 +13,4 @@ featuredImage: "featured-image.jpeg"
 
 {{< load-photoswipe >}}
 
-Hi
+Before starting my immersive at Hack Reactor, I decided to try and build an emulator!<!--more-->I got the idea for the project from [this large collection of project ideas](https://github.com/danistefanovic/build-your-own-x), and while GameBoy was a tempting prospect to emulate I quickly realized how much time it would take to compelete one. So I went with the much simpler Chip-8.
