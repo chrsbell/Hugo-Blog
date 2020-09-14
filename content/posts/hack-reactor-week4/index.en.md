@@ -12,9 +12,7 @@ featuredImage: "featured-image.jpeg"
 
 {{< load-photoswipe >}}
 
-Yep I jumped on the bootcamp train during one of the strangest times to do so.</br></br>
-
-<!--more-->
+Yep I jumped on the bootcamp train during one of the strangest times to do so.<!--more--></br></br>
 
 In mid June, I was browsing reddit and came across an ad promising (not really) a six-figure salary in return for 12 weeks of coding and about 20k. </br></br>
 
