@@ -4,7 +4,7 @@ subtitle: "I made it this far!?"
 author: "Chris"
 description: ""
 date: 2020-09-13T15:21:33-07:00
-draft: false
+draft: true
 tags: ["hack-reactor", "bootcamp", "pair-programming"]
 categories: ["Hack Reactor"]
 featuredImage: "featured-image.jpeg"
@@ -12,11 +12,8 @@ featuredImage: "featured-image.jpeg"
 
 {{< load-photoswipe >}}
 
-Yep I jumped on the bootcamp train during one of the strangest times to do so.
+Yep I jumped on the bootcamp train during one of the strangest times to do so.<!--more--></br>
 
-<!--more-->
-
-</br></br>
 In mid June, I was browsing reddit and came across an ad promising (not really) a six-figure salary in return for 12 weeks of coding and about 20k. </br></br>
 
 As my site header says, I love to build and have been feeling a burning desire for a career switch for a while now. A couple of months and the cost of multiple kidneys later, I moved from coast to coast to a new city where I know no one to embark on a journey that may or may not pan out. Kinda crazy.
