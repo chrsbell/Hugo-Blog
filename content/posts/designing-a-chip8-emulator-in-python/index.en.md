@@ -28,7 +28,7 @@ Before starting my immersive at Hack Reactor, I decided to try and build an emul
 
 ### Rendering Graphics
 
-This was my first time really diving into how emulation worked, and doing it in a relatively new language for me was also a challenge. I spent a few days refreshing my knowledge of Python by watching tutorial videos and once I felt that I had the essential fundamentals down, I started by writing a rendering class.
+This was my first time really diving into how emulation worked and doing it in a relatively new language for me was also a challenge. I spent a few days refreshing my knowledge of Python by watching tutorial videos and once I felt that I had the essential fundamentals down, I started by writing a rendering class.
 </br></br>
 I'd done a lot of OpenGL based rendering in high school so I decided to go with what I was familiar with and write a simple class which could toggle virtual 'pixels' on the screen. The Chip-8 language uses a 64x32 monochrome display, so I mapped each corresponding section of the emulator window to a pixel.
 </br></br>
@@ -86,9 +86,9 @@ Each Chip-8 instruction is 2-bytes long, however, so to successfully load a ROM 
 
 {{< /admonition >}}
 
-Next I had to figure out a way to map each of the 36 opcodes to a corresponding function. This turned out to be challenging in that different instructions contain variables in their names to represent targeted bits of the instruction.
+Next, I had to figure out a way to map each of the 36 opcodes to a corresponding function. This turned out to be challenging in that different instructions contain variables in their names to represent targeted bits of the instruction.
 </br></br>
-For example, one instruction might be **8FA0** and need to be mapped to **8xy0**, where x represents the lowest 4 bits of the upper half of the opcode and y represents the upper 4 bits of the lower half of the opcode. Creating a hashing function which worked for all 36 opcodes took a good while to figure out, but once I had it working I was able to simply write out all of the necessary opcode functions.
+For example, one instruction might be **8FA0** and need to be mapped to **8xy0**, where x represents the lowest 4 bits of the upper half of the opcode and y represents the upper 4 bits of the lower half of the opcode. Creating a hashing function that worked for all 36 opcodes took a good while to figure out, but once I had it working I was able to simply write out all of the necessary opcode functions.
 </br></br>
 {{< figure src="/images/blog/11-8/hash.png" caption="Mapping each opcode to a function for easy instruction lookup" >}}
 </br></br>
@@ -118,7 +118,7 @@ Another challenge I faced was generating audio of a variable length for the soun
 
 ### Closing Comments
 
-There are some other features I touched on while working on the emulator that I didn't fully implement, such as remappable keyboard input and saving/loading ROM states. All in all this was an incredibly fun mini project and I would love to tackle Game Boy emulation sometime, preferably in JavaScript!
+There are some other features I touched on while working on the emulator that I didn't fully implement, such as remappable keyboard input and saving/loading ROM states. All in all, this was an incredibly fun mini project and I would love to tackle Game Boy emulation sometime, preferably in JavaScript!
 </br></br>
 Finally, here is a quick demo video:
 </br></br>
