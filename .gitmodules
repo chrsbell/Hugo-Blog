@@ -1,7 +1,3 @@
-[submodule "public"]
-	path = public
-	url = https://github.com/chrsbell/chrsbell.github.io
-	branch = master
-[submodule "chrsbell.github.io"]
-	path = chrsbell.github.io
-	url = https://github.com/chrsbell/chrsbell.github.io
+[submodule "themes/LoveIt"]
+	path = themes/LoveIt
+	url = https://github.com/dillonzq/LoveIt.git
