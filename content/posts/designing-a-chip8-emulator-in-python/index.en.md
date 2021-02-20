@@ -36,6 +36,8 @@ Since I was using Modern OpenGL (i.e. shaders and vertex buffer objects), I was 
 I decided to keep it simple by representing each virtual pixel as a set of 4 vertices and rendering the data as `GL_QUADS`, but further optimization using `GL_TRIANGLES` or `GL_TRIANGLE_STRIP` could significantly reduce the vertex count.
 </br></br>
 
+</div>
+
 {{< admonition note "The set pixel function" >}}
 
 {{< gist chrsbell a8f448fef0e71da4f67d4ffb8b419cff >}}
