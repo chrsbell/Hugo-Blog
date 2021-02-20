@@ -1,27 +1,27 @@
 ---
-title: "GameBoy Emulator Log #1"
-subtitle: ""
+title: "Game Boy Emulator Log #1"
+subtitle: "The Game Boy CPU"
 author: "Chris"
 description: ""
 date: 2021-02-18T18:15:02.751Z
-draft: true
-tags: ["typescript", "emulator", "gameboy"]
-categories: ["Chip-8"]
+draft: false
+tags: ["typescript", "emulator", "game boy"]
+categories: ["Game Boy"]
 DisableComments: false
 featuredImage: "featured-image.jpg"
 ---
 
-Here, I'll give a brief overview of the GameBoy's processor and how I'm implementing it.<!--more-->
+Here, I'll give a brief overview of the Game Boy's processor and how I'm implementing it.<!--more-->
 
 ---
 
 ### CPU Overview
 
-Before beginning, I knew that GameBoy would be a more difficult system to emulate than Chip-8. While researching the system, I've come to appreciate how surprisingly sophisticated its hardware actually is. This video does a great job of explaining it in detail: </br></br>
+Before beginning, I knew that the Game Boy would be a more difficult system to emulate than Chip-8. While researching the system, I've come to appreciate how surprisingly sophisticated its hardware is. This video does a great job of explaining it in detail: </br></br>
 
 {{< youtube RZUDEaLa5Nw >}}</br></br>
 
-The GameBoy system uses an SM83 microprocessor and decodes/executes opcodes using a fetch-and-execute loop. This fetch-and-execute loop differs from the Chip-8's in that the next opcode is fetched in *parallel* with the execution of the current opcode instead of serially.</br></br>
+The Game Boy system uses an SM83 microprocessor and decodes/executes opcodes using a fetch-and-execute loop. This fetch-and-execute loop differs from the Chip-8's in that the next opcode is fetched in *parallel* with the execution of the current opcode instead of serially.</br></br>
 
 This means that it requires at least 2 machine cycles to complete a single instruction if writing a serial fetch-and-execute loop, like the one I'm writing.</br></br>
 
@@ -30,9 +30,9 @@ The SM83's instruction set is very similar to a Z80's, with a few specialized in
 For my emulator, I've mostly referenced these documentation sources for the instruction set:</br></br>
 
 - [Gbdev's Opcode Table](https://gbdev.io/gb-opcodes/optables/)
-- [Gekkio's GameBoy Technical Reference](https://gekkio.fi/files/gb-docs/gbctr.pdf)
+- [Gekkio's Game Boy Technical Reference](https://gekkio.fi/files/gb-docs/gbctr.pdf)
 - [Z80 Instruction Documentation](https://gist.github.com/sifton/4471555)
-- [Imran Nazar's GameBoy](http://imrannazar.com/GameBoy-Emulation-in-JavaScript:-The-CPU)
+- [Imran Nazar's Game Boy](http://imrannazar.com/GameBoy-Emulation-in-JavaScript:-The-CPU)
 </br></br>
 
 The half-carry flag and DAA instructions were difficult for me to learn, so I used these resources as well:
@@ -43,21 +43,25 @@ The half-carry flag and DAA instructions were difficult for me to learn, so I us
 - [Explanation of Decimal Adjust](https://forums.nesdev.com/viewtopic.php?t=15944)
 </br></br>
 
+---
+
+</br>
+
 #### RLA/RRA instructions
 
-The bit rotation instructions were pretty fun to learn about and there were some subtleties when I implemented it.</br></br>
+The bit rotation instructions were pretty fun to learn about and there were some subtleties when I implemented them.</br></br>
 
 The goals of the RLA and RRA instructions are to rotate the affected register (A) left or right through the carry bit.</br></br>
 
 {{< admonition note "About register A" >}}
 
-Register A serves as the "accumulator" register and is used to store the results of and perform mathematical operations. I thought it was interesting as in JavaScript, the reduce method of an array takes an argument by the same name and is used for the same purpose.
+Register A serves as the "accumulator" register and is used to store the results of and perform mathematical operations. I thought this was interesting as in JavaScript, the reduce method of an array takes an argument by the same name and uses it for the same purpose.
 
 {{< /admonition >}}</br>
 
 At first, I thought left/right shifting using `<<` or `>>` would be enough, but the goal here is to incorporate the carry bit as a 9th bit.</br></br>
 
-In the case of RLA for example:
+In the case of RLA, for example:
  1. A copy of the carry bit is stored.
  2. Bit 7 becomes the new carry bit.
  3. All bits are left-shifted using the `<<` operator.
@@ -71,13 +75,17 @@ Here is some example code from my emulator, and an example from the [Gambatte em
 ##### Gambatte's RLA
 <iframe frameborder="0" width="100%" height="500px" src="https://repl.it/@chrsbell/Gambatte-RLA?lite=true"></iframe></br></br>
 
+---
+
+</br>
+
 ### Emulating the CPU
 
-I made the decision early on to use TypeScript since there are a lot of data types required by the emulator. For example, I have types and interfaces for a Byte, Word, ByteArray, Register, Flag, and more.</br></br>
+I made the decision early on to use TypeScript since there are a lot of data types required by the emulator. For example, I have types and interfaces for a *Byte*, *Word*, *ByteArray*, *Register*, *Flag*, and more.</br></br>
 
-This was helpful when writing instructions as I found myself regularly double checking the data type of every address/register and read/write value from memory.</br></br>
+This was helpful when writing instructions as I found myself regularly double-checking the data type of every address/register and read/write value from memory.</br></br>
 
-Once I verify the functionality of my CPU, I'd like to turn some of the primitive types into simple functions since they rely on `new` instantiation and I'm not sure how that will affect the memory usage of my emulator.</br></br>
+Once I verify the functionality of my CPU, I'd like to turn some of the primitive types into simple functions. My primitive types rely on `new` instantiation which increases the memory usage of my emulator, I think.</br></br>
 
 For example:
 ```typescript
@@ -93,9 +101,9 @@ Compared to my Chip-8 emulator, I did not need to write a hash function to decod
 
 To help accomplish this, I made an [intermediate function generator](https://github.com/chrsbell/gameboy-instruction-generator) that automates the process while also allowing me to make changes to the documentation in the future.</br></br>
 
-The function generator uses a [JSON of the instruction set](https://gbdev.io/gb-opcodes/Opcodes.json) to create functions which return the number of machine cycles each opcode requires and increments the program counter accordingly.</br></br>
+The function generator uses a [JSON of the instruction set](https://gbdev.io/gb-opcodes/Opcodes.json) to create functions that return the number of machine cycles each opcode requires and increments the program counter accordingly.</br></br>
 
-Keeping track of the m-cycles is important to properly emulate rendering and other timing functions...I'll save that explanation for when I get there.</br></br>
+Keeping track of the number of m-cycles each opcode uses is important to properly emulate rendering and other timing functions...I'll save that explanation for when I get there.</br></br>
 
 Here's an example of the auto-generated opcode `RLA`:
 
@@ -156,10 +164,14 @@ Finally, here is what my fetch-execute cycle looks like at the moment:
 ```
 </br></br>
 
+---
+
+</br>
+
 ### Next steps
 
-Right now, I've written the core 256 instructions and am working on testing. Writing tests for the emulator will be very interesting and I'll talk about it in another post.</br></br>
+Right now, I've written the core 256 instructions and am working on testing. Writing tests for the emulator will be challenging and I'll talk about it in another post.</br></br>
 
-I also have a Memory class that supports reading/writing bytes and words using an MBC0 cartridge. I may talk about this later also after I've tested it.</br></br>
+I also have a Memory class that supports reading/writing bytes and words using an MBC0 cartridge. I may talk about this later after I've tested it.</br></br>
 
 [The full source is available here, I'm working on the opcodes and test-suite branches right now.](https://github.com/chrsbell/GameBoy-Emulator)

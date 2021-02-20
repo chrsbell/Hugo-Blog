@@ -2,7 +2,7 @@
 
 ## Dependencies
 
-- [Hugo v0.68.3 or higher, install using homebrew](https://gohugo.io/getting-started/installing/)
+- [Hugo v0.68.3 or higher](https://gohugo.io/getting-started/installing/)
 - config.toml in root directory (contains gitalk credentials)
 - .env in root directory (contains algolia credentials)
 

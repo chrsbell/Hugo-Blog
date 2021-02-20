@@ -37,7 +37,6 @@ I decided to keep it simple by representing each virtual pixel as a set of 4 ver
 </br></br>
 
 </div>
-
 {{< admonition note "The set pixel function" >}}
 
 {{< gist chrsbell a8f448fef0e71da4f67d4ffb8b419cff >}}
@@ -114,10 +113,10 @@ Another challenge I faced was generating audio of a variable length for the soun
 
 {{< admonition note "This is the whole class" >}}
 
-</div>
 {{< gist chrsbell e50ea6179d49e9b44ddc9f8ee261eb62 >}}
-<div>
+
 {{< /admonition >}}
+<div>
 
 ### Closing Comments
 
