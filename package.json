@@ -7,10 +7,10 @@
   },
   "devDependencies": {},
   "scripts": {
-    "start": "hugo server -D -e production",
+    "start": "hugo server --disableFastRender",
     "nodraft": "hugo server -e production",
-    "build-nodraft": "hugo -e production",
-    "build-all": "hugo -e production && echo \"\nDon't forget to index the generated files with 'npm run index'!\"",
+    "build-nodraft": "hugo -e production --minify",
+    "build-all": "hugo -e production --minify && echo \"\nDon't forget to index the generated files with 'npm run index'!\"",
     "index": "atomic-algolia"
   },
   "repository": {

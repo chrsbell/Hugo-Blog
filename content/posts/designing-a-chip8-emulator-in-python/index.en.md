@@ -114,8 +114,8 @@ Another challenge I faced was generating audio of a variable length for the soun
 
 {{< admonition note "This is the whole class" >}}
 
+</div>
 {{< gist chrsbell e50ea6179d49e9b44ddc9f8ee261eb62 >}}
-
 <div>
 {{< /admonition >}}
 
