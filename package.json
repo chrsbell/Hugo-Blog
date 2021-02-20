@@ -7,7 +7,7 @@
   },
   "devDependencies": {},
   "scripts": {
-    "start": "hugo server --disableFastRender",
+    "start": "hugo server -D",
     "nodraft": "hugo server -e production",
     "build-nodraft": "hugo -e production --minify",
     "build-all": "hugo -e production --minify && echo \"\nDon't forget to index the generated files with 'npm run index'!\"",
